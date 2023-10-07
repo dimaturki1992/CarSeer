@@ -27,11 +27,11 @@ namespace CarSeer.Services
                 List<string> CSVFileRows = _CSVFileReaderService.GetCSVFileRows(reader);
                 List<CarMakeInfo> data = CSVFileRows.Select(row =>
                 {
-                    string[] lineValues = row.Split(_CSVFileColSplitter);
+                    string[] lineValues = row.Split(_CSVFileColSplitter, 2);
                     return new CarMakeInfo()
                     {
                         Id = int.Parse(lineValues[0]),
-                        Name = lineValues[1].Trim('"')
+                        Name = lineValues[1].Trim()
                     };
                 }).ToList();
                 return data;
