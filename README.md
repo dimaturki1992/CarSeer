@@ -2,7 +2,7 @@
 A simple ASP.Net Core Web API project with Swagger UI.
 
 # Getting Started
-These instructions will help get a copy of the project and run the app on your local machine.
+These instructions will help you get a copy of the project and run the app on your local machine.
 
 ## Prerequirements
 * Visual Studio 2022
