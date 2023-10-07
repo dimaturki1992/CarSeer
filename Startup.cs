@@ -20,6 +20,7 @@ namespace CarSeer
             services.AddControllers();
             services.AddHttpClient();
             services.AddScoped<ILocalFileReaderService, LocalFileReaderService>();
+            services.AddScoped<ICSVFileReaderService, CSVFileReaderService>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CarSeer", Version = "v1" });
