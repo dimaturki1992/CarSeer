@@ -1,5 +1,6 @@
 ﻿using CarSeer.Interfaces;
 using CarSeer.Models;
+using System.Text.RegularExpressions;
 
 namespace CarSeer.Services
 {
@@ -18,7 +19,8 @@ namespace CarSeer.Services
         public int GetMakeId(string make)
         {
             var data = GetIdNamePairs();
-            var matchingRow = data.FirstOrDefault(row => row.Name.ToLower() == make.ToLower());
+            string sanitizedMake = make.SanitizeInput();
+            var matchingRow = data.FirstOrDefault(row => row.Name.SanitizeInput() == sanitizedMake);
             if (matchingRow != null)
             {
                 return matchingRow.Id;
