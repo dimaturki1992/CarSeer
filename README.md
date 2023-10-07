@@ -11,7 +11,6 @@ These instructions will help you get a copy of the project and run the app on yo
 ## Instructions
 * git clone https://github.com/dimaturki1992/CarSeer.git
 * Open the solution in Visual Studio
-* cd CarSeer
 * dotnet build
 * dotnet run
 * open http://localhost:5035/swagger
