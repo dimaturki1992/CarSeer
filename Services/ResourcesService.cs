@@ -31,7 +31,7 @@ namespace CarSeer.Services
                     return new CarMakeInfo()
                     {
                         Id = int.Parse(lineValues[0]),
-                        Name = lineValues[1].Trim()
+                        Name = lineValues[1]
                     };
                 }).ToList();
                 return data;
