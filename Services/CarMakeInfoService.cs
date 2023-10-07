@@ -12,7 +12,7 @@ namespace CarSeer.Services
 
         private const string FilePath = "Resources/CarMake.csv";
         private const char CSVFileColSplitter = ',';
-       
+
         public CarMakeInfoService(
             ILocalFileReaderService localFileReaderService,
             ICSVFileReaderService CSVFileReaderService
@@ -26,7 +26,11 @@ namespace CarSeer.Services
         {
             var data = GetIdNamePairs();
             var matchingRow = data.FirstOrDefault(row => row.Name.ToLower() == make.ToLower());
-            return matchingRow.Id;
+            if (matchingRow != null)
+            {
+                return matchingRow.Id;
+            }
+            throw new Exception("Car model does not exist.");
         }
 
         private List<CarMakeInfo> GetIdNamePairs()
@@ -41,18 +45,20 @@ namespace CarSeer.Services
 
         private List<CarMakeInfo> ReadMakeInfo()
         {
-            using var reader = _localFileReaderService.LoadFile(FilePath);
-            List<string> CSVFileRows = _CSVFileReaderService.GetCSVFileRows(reader);
-            List<CarMakeInfo> data = CSVFileRows.Select(row =>
+            using (var reader = _localFileReaderService.LoadFile(FilePath))
             {
-                string[] lineValues = row.Split(CSVFileColSplitter);
-                return new CarMakeInfo()
+                List<string> CSVFileRows = _CSVFileReaderService.GetCSVFileRows(reader);
+                List<CarMakeInfo> data = CSVFileRows.Select(row =>
                 {
-                    Id = int.Parse(lineValues[0]),
-                    Name = lineValues[1].Trim('"')
-                };
-            }).ToList();
-            return data;
+                    string[] lineValues = row.Split(CSVFileColSplitter);
+                    return new CarMakeInfo()
+                    {
+                        Id = int.Parse(lineValues[0]),
+                        Name = lineValues[1].Trim('"')
+                    };
+                }).ToList();
+                return data;
+            }
         }
 
     }

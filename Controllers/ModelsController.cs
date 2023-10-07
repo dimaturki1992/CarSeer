@@ -1,5 +1,7 @@
 using CarSeer.Interfaces;
+using CarSeer.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace CarSeer.Controllers
 {
@@ -21,11 +23,18 @@ namespace CarSeer.Controllers
         }
 
         [HttpGet()]
-        public async Task<IActionResult> Get([FromQuery] string make, [FromQuery] int modelyear)
+        public async Task<IActionResult> Get([FromQuery][BindRequired] string make, [FromQuery][BindRequired] int modelYear)
         {
-            int makeId = _carMakeInfoService.GetMakeId(make);
-            var response = await _carModelService.GetModels(makeId, modelyear);
-            return Ok(response);
+            try
+            {
+                int makeId = _carMakeInfoService.GetMakeId(make);
+                CarModelsResponseDTO response = await _carModelService.GetModels(makeId, modelYear);
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

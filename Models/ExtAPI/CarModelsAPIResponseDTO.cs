@@ -8,6 +8,8 @@
         public List<CarModel> Results { get; set; }
     }
 
+
+    // The following property names use underscores to match the external API's response format.
     public class CarModel : IMake, IModel
     {
         public int Make_ID { get; set; }

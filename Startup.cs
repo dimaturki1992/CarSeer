@@ -1,4 +1,3 @@
-
 using CarSeer.Interfaces;
 using CarSeer.Services;
 using Microsoft.OpenApi.Models;
@@ -19,10 +18,11 @@ namespace CarSeer
         {
             services.AddControllers();
             services.AddHttpClient();
-            services.AddScoped<ILocalFileReaderService, LocalFileReaderService>();
-            services.AddScoped<ICSVFileReaderService, CSVFileReaderService>();
+            services.AddSingleton<ILocalFileReaderService, LocalFileReaderService>();
+            services.AddSingleton<ICSVFileReaderService, CSVFileReaderService>();
+            services.AddSingleton<ICarMakeInfoService, CarMakeInfoService>();
+            services.AddSingleton<IHttpService, HttpService>();
             services.AddScoped<ICarModelService, CarModelService>();
-            services.AddScoped<ICarMakeInfoService, CarMakeInfoService>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CarSeer", Version = "v1" });

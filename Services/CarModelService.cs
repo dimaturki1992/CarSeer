@@ -1,31 +1,28 @@
 ﻿using CarSeer.Interfaces;
 using CarSeer.Models;
 using CarSeer.Models.ExtAPI;
-using Newtonsoft.Json;
 
 namespace CarSeer.Services
 {
     public class CarModelService : ICarModelService
     {
-        private readonly HttpClient _httpClient;
+        private readonly IHttpService _httpService;
         private const string vehiclesApiBaseUrl = "https://vpic.nhtsa.dot.gov/api/vehicles/";
 
-        public CarModelService(HttpClient httpClient)
+        public CarModelService(IHttpService httpService)
         {
-            _httpClient = httpClient;
+            _httpService = httpService;
         }
 
         public async Task<CarModelsResponseDTO> GetModels(int makeId, int year)
         {
             var apiUrl = $"{vehiclesApiBaseUrl}GetModelsForMakeIdYear/makeId/{makeId}/modelyear/{year}?format=json";
-            var response = await _httpClient.GetAsync(apiUrl);
-            var content = await response.Content.ReadAsStringAsync();
-            var apiResponse = JsonConvert.DeserializeObject<CarModelsAPIResponseDTO>(content);
-            CarModelsResponseDTO models = new CarModelsResponseDTO()
+            CarModelsAPIResponseDTO apiResponse = await _httpService.GetApiResponseContent<CarModelsAPIResponseDTO>(apiUrl);
+            CarModelsResponseDTO carModelsResponse = new CarModelsResponseDTO()
             {
                 Models = apiResponse.Results.Select(record => record.Model_Name).ToList()
             };
-            return models;
+            return carModelsResponse;
 
         }
     }
