@@ -21,6 +21,7 @@ namespace CarSeer
             services.AddHttpClient();
             services.AddScoped<ILocalFileReaderService, LocalFileReaderService>();
             services.AddScoped<ICSVFileReaderService, CSVFileReaderService>();
+            services.AddScoped<ICarModelService, CarModelService>();
             services.AddScoped<ICarMakeInfoService, CarMakeInfoService>();
             services.AddSwaggerGen(c =>
             {
