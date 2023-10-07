@@ -23,6 +23,7 @@ namespace CarSeer
             services.AddSingleton<ICarMakeInfoService, CarMakeInfoService>();
             services.AddSingleton<IHttpService, HttpService>();
             services.AddScoped<ICarModelService, CarModelService>();
+            services.AddSingleton<IResourcesService, ResourcesService>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CarSeer", Version = "v1" });

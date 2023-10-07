@@ -7,7 +7,7 @@ namespace CarSeer.Services
     public class CarModelService : ICarModelService
     {
         private readonly IHttpService _httpService;
-        private const string vehiclesApiBaseUrl = "https://vpic.nhtsa.dot.gov/api/vehicles/";
+        private const string _vehiclesApiBaseUrl = "https://vpic.nhtsa.dot.gov/api/vehicles/";
 
         public CarModelService(IHttpService httpService)
         {
@@ -16,7 +16,7 @@ namespace CarSeer.Services
 
         public async Task<CarModelsResponseDTO> GetModels(int makeId, int year)
         {
-            var apiUrl = $"{vehiclesApiBaseUrl}GetModelsForMakeIdYear/makeId/{makeId}/modelyear/{year}?format=json";
+            var apiUrl = $"{_vehiclesApiBaseUrl}GetModelsForMakeIdYear/makeId/{makeId}/modelyear/{year}?format=json";
             CarModelsAPIResponseDTO apiResponse = await _httpService.GetApiResponseContent<CarModelsAPIResponseDTO>(apiUrl);
             CarModelsResponseDTO carModelsResponse = new CarModelsResponseDTO()
             {
